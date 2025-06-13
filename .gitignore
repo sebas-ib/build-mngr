@@ -1,0 +1,30 @@
+# Frontend
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.tailwind/
+frontend/.env*
+frontend/.vercel/
+frontend/next-env.d.ts
+frontend/*.tsbuildinfo
+
+# Backend
+backend/node_modules/
+backend/venv/
+backend/__pycache__/
+backend/.env*
+backend/*.py[cod]
+backend/*.log
+backend/coverage/
+backend/build/
+backend/dist/
+backend/*.egg-info/
+
+# Common
+.DS_Store
+.idea/
+.vscode/
+.env*
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
