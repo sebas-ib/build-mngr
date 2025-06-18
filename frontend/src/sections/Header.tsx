@@ -36,7 +36,6 @@ export const Header = () => {
 
   return (
     <>
-      {/* Header */}
       <header className="sticky top-0 z-50 backdrop-blur-sm bg-white/10">
         <div className="flex justify-center items-center py-2 bg-black text-white text-xs sm:text-sm">
           <p>Get started today — Manage your projects smarter!</p>
@@ -65,7 +64,6 @@ export const Header = () => {
         </div>
       </header>
 
-      {/* Mobile Menu with Fade */}
       {isVisible && (
         <div
           className={`fixed inset-0 z-40 bg-white h-screen px-6 pt-30 pb-10 flex flex-col transition-opacity duration-500 ${
