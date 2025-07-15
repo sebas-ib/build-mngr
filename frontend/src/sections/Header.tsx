@@ -48,9 +48,15 @@ export const Header = () => {
             <a href="#features" className="hover:text-black transition-colors">Features</a>
             <a href="#pricing" className="hover:text-black transition-colors">Pricing</a>
             <a href="#contact" className="hover:text-black transition-colors">Contact</a>
-            <Link href="/login">
-              <button className="btn btn-primary">Log In</button>
-            </Link>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                setMenuOpen(false);
+                window.location.href = "http://localhost:5000/login";
+              }}
+            >
+              Log In
+            </button>
           </nav>
           <div className="sm:hidden z-50">
             <button
@@ -82,11 +88,15 @@ export const Header = () => {
             </a>
           </div>
           <div className="mt-auto">
-            <Link href="/login">
-              <button className="btn btn-primary w-full" onClick={() => setMenuOpen(false)}>
-                Log In
-              </button>
-            </Link>
+            <button
+              className="btn btn-primary w-full"
+              onClick={() => {
+                setMenuOpen(false);
+                window.location.href = "http://localhost:5000/login";
+              }}
+            >
+              Log In
+            </button>
           </div>
         </div>
       )}

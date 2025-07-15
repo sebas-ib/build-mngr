@@ -10,7 +10,7 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: "BuildManager",
-  description: "Everything you need to manage projects in one place.",
+  description: "Everything you need to manage project in one place.",
 };
 
 export default function RootLayout({

@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 
 export const Hero = () => {
@@ -12,9 +14,14 @@ export const Hero = () => {
             Everything you need to manage projects in one place.
           </p>
           <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 mt-8">
-            <Link href="/login">
-              <button className="btn btn-primary">Get Started</button>
-            </Link>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                window.location.href = "http://localhost:5000/login";
+              }}
+            >
+              Get Started
+            </button>
             <Link href="#features">
               <button className="btn btn-outline">See How It Works</button>
             </Link>

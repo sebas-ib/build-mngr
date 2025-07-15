@@ -40,6 +40,7 @@ export default function NewProject() {
             const res = await fetch("http://localhost:5000/api/projects", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
+                credentials: "include",
                 body: JSON.stringify(newProject),
             });
 
