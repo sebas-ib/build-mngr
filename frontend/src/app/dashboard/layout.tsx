@@ -1,18 +1,25 @@
+// /app/dashboard/layout.tsx
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
 import "../globals.css";
-
-const dmSans = DM_Sans({ subsets: ["latin"] });
+import SyncUserEffect from "@/app/dashboard/components/SyncUserComponent";
+import { ProjectsProvider } from "@/app/dashboard/context/ProjectsContext";
+import Navbar from "@/app/dashboard/components/Navbar";
 
 export const metadata: Metadata = {
   title: "BuildManager",
-  description: "Everything you need to manage project in one place.",
+  description: "Everything you need to manage projects in one place.",
 };
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen flex">
-      <main className="flex-1 p-10 bg-gray-50">{children}</main>
-    </div>
+    <>
+      <SyncUserEffect />
+      <ProjectsProvider>
+        <Navbar />
+        <div className="min-h-screen flex">
+          <main className="flex-1 p-10 bg-gray-50">{children}</main>
+        </div>
+      </ProjectsProvider>
+    </>
   );
 }

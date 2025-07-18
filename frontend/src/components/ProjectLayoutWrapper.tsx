@@ -32,7 +32,7 @@ export default function ProjectLayoutWrapper({
 
   useEffect(() => {
     async function fetchProject() {
-      const res = await fetch(`http://localhost:5000/api/projects/${projectId}`, {
+      const res = await fetch(`http://localhost:5000/api/project/${projectId}`, {
         credentials: "include",
       });
 
