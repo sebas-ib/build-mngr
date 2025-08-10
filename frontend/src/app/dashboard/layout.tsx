@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import "../globals.css";
 import SyncUserEffect from "@/app/dashboard/components/SyncUserComponent";
 import { ProjectsProvider } from "@/app/dashboard/context/ProjectsContext";
-import Navbar from "@/app/dashboard/components/Navbar";
 
 export const metadata: Metadata = {
   title: "BuildManager",
@@ -15,7 +14,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <>
       <SyncUserEffect />
       <ProjectsProvider>
-        <Navbar />
         <div className="min-h-screen flex">
           <main className="flex-1 p-10 bg-gray-50">{children}</main>
         </div>

@@ -1,10 +1,14 @@
 "use client";
 
+
+import { useProjects } from "@/app/dashboard/context/ProjectsContext";
 import {useRouter} from "next/navigation";
 import {useState} from "react";
 
 export default function NewProject() {
     const router = useRouter();
+    const { refetchProjects } = useProjects();
+
 
     const [name, setName] = useState("");
     const [client, setClient] = useState("");
@@ -52,6 +56,7 @@ export default function NewProject() {
             }
 
             console.log("Project created:", result.project);
+            await refetchProjects();
             router.push("/dashboard");
         } catch (err) {
             console.error("Request failed:", err);

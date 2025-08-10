@@ -1,3 +1,4 @@
+// Navbar.tsx
 'use client';
 
 import { JSX, useEffect, useRef, useState } from "react";
@@ -8,21 +9,28 @@ import {
   Home, Megaphone, CalendarDays, FolderOpen, Users2,
   ListChecks, ReceiptText, ShieldCheck, StickyNote
 } from "lucide-react";
-import { useProjects } from "@/app/dashboard/context/ProjectsContext";
+import { useProject } from "@/components/ProjectLayoutWrapper";
 
 export default function Navbar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
   const { user, loading } = useAuth();
   const params = useParams();
   const pathname = usePathname();
-  const { projects } = useProjects();
+
+  // Try to access project, but fallback gracefully if outside ProjectLayoutWrapper
+  let project: any = null;
+  try {
+    project = useProject().project;
+  } catch {
+    project = null;
+  }
 
   const projectId = params?.id as string | undefined;
-  const projectName = projects.find((p) => p.projectId === projectId)?.name || "";
+  const projectName = project?.name || "";
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -33,34 +41,15 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Close sidebar on route change
   useEffect(() => {
     setIsSidebarOpen(false);
   }, [pathname]);
 
   return (
     <>
-      {/* Top Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200">
         <div className="flex items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
-            {/* Mobile Hamburger */}
-            {projectId && (
-              <button
-                className="block md:hidden"
-                onClick={() => setIsSidebarOpen((prev) => !prev)}
-              >
-                <svg
-                  className="w-6 h-6 text-gray-700"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-            )}
             {projectId ? (
               <>
                 <Link href="/dashboard" className="text-lg text-gray-500 hover:text-black transition">
@@ -95,7 +84,7 @@ export default function Navbar() {
                     Settings
                   </Link>
                   <button
-                    onClick={() => (window.location.href = "http://localhost:5000/logout")}
+                    onClick={() => (window.location.href = "http://localhost:5000/api/logout")}
                     className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
                   >
                     Log out
@@ -107,8 +96,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Sidebar */}
-      {projectId && (
+      {projectId && project && (
         <aside
           className={`fixed top-0 left-0 z-40 h-full w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out shadow-lg ${
             isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"

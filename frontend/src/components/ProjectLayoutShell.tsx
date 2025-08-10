@@ -10,8 +10,8 @@ export default function ProjectLayoutShell({ children }: { children: React.React
 
   return (
     <>
-      <Navbar />
       <ProjectLayoutWrapper projectId={projectId}>
+          <Navbar />
         {children}
       </ProjectLayoutWrapper>
     </>

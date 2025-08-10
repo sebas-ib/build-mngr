@@ -17,7 +17,7 @@ export const Hero = () => {
             <button
               className="btn btn-primary"
               onClick={() => {
-                window.location.href = "http://localhost:5000/login";
+                window.location.href = "http://localhost:5000/api/login";
               }}
             >
               Get Started

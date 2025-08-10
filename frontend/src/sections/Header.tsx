@@ -51,7 +51,7 @@ export const Header = () => {
               className="btn btn-primary"
               onClick={() => {
                 setMenuOpen(false);
-                window.location.href = "http://localhost:5000/login";
+                window.location.href = "http://localhost:5000/api/login";
               }}
             >
               Log In
@@ -91,7 +91,7 @@ export const Header = () => {
               className="btn btn-primary w-full"
               onClick={() => {
                 setMenuOpen(false);
-                window.location.href = "http://localhost:5000/login";
+                window.location.href = "http://localhost:5000/api/login";
               }}
             >
               Log In
