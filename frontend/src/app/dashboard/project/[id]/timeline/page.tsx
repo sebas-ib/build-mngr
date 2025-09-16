@@ -31,7 +31,7 @@ export default function TimelinePage() {
       setProject({ ...project, timeline: updatedTimeline });
 
       const res = await fetch(
-        `http://localhost:5000/api/project/${project.projectId}/timeline`,
+        `http://localhost:5000/api/projects/${project.projectId}/timeline`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -88,7 +88,6 @@ export default function TimelinePage() {
     }
   };
 
-  // ✅ Utility for safely updating editingPhase
   const updateEditingPhase = <K extends keyof TimelineEvent>(key: K, value: TimelineEvent[K]) => {
     setEditingPhase((prev) => (prev ? { ...prev, [key]: value } : prev));
   };

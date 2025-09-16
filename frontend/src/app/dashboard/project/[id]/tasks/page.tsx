@@ -15,13 +15,13 @@ interface Task {
 }
 
 export default function TasksPage() {
-  const { project, setProject } = useProject();
+  const { project} = useProject();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState({ title: "", description: "", dueDate: "" });
 
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/project/${project.projectId}/tasks`, {
+    fetch(`http://localhost:5000/api/projects/${project.projectId}/tasks`, {
       credentials: "include",
     })
       .then((res) => res.json())
@@ -31,7 +31,7 @@ export default function TasksPage() {
 
   const syncTasks = (updatedTasks: Task[]) => {
     setTasks(updatedTasks);
-    fetch(`http://localhost:5000/api/project/${project.projectId}/tasks`, {
+    fetch(`http://localhost:5000/api/projects/${project.projectId}/tasks`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

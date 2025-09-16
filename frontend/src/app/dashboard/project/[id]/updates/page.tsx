@@ -13,7 +13,7 @@ export default function UpdatesPage() {
   });
   const [filter, setFilter] = useState("");
   const [loading, setLoading] = useState(false);
-  const hasFetched = useRef(false); // ✅ prevents infinite fetch loop
+  const hasFetched = useRef(false);
 
   useEffect(() => {
     const fetchUpdates = async () => {
@@ -21,27 +21,27 @@ export default function UpdatesPage() {
       hasFetched.current = true;
 
       setLoading(true);
-      const res = await fetch(`http://localhost:5000/api/project/${project.projectId}/updates`, {
+      const res = await fetch(`http://localhost:5000/api/projects/${project.projectId}/updates`, {
         credentials: "include",
       });
 
       if (res.ok) {
         const data = await res.json();
-        setProject(prev => ({
-          ...prev,
-          updates: data,
-        }));
+        setProject(prev => {
+          if (!prev) return prev; // keep null as null
+          return { ...prev, updates: data };
+        });
       }
       setLoading(false);
     };
 
     fetchUpdates();
-  }, [project.projectId, setProject]); // ✅ removed project.updates from dependencies
+  }, [project.projectId, setProject]);
 
   const handleAddUpdate = async () => {
     if (!newUpdate.title || !newUpdate.author || !newUpdate.date || !newUpdate.summary) return;
 
-    const res = await fetch(`http://localhost:5000/api/project/${project.projectId}/updates`, {
+    const res = await fetch(`http://localhost:5000/api/projects/${project.projectId}/updates`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -49,11 +49,12 @@ export default function UpdatesPage() {
     });
 
     if (res.ok) {
-      const added = await res.json();
-      setProject(prev => ({
-        ...prev,
-        updates: prev.updates ? [added, ...prev.updates] : [added],
-      }));
+      const added = await res.json(); // the newly created update
+      setProject(prev => {
+        if (!prev) return prev; // keep null as null
+        const existing = Array.isArray(prev.updates) ? prev.updates : [];
+        return { ...prev, updates: [added, ...existing] };
+      });
       setNewUpdate({ title: "", author: "", date: "", summary: "" });
     }
   };

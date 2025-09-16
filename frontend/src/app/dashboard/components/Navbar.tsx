@@ -11,6 +11,19 @@ import {
 } from "lucide-react";
 import { useProject } from "@/components/ProjectLayoutWrapper";
 
+// --- Minimal types so we avoid `any`
+type ProjectLike = { name?: string } | null;
+type ProjectContextLike = { project: ProjectLike } | null;
+
+// Safe wrapper hook: always called; returns null if provider missing
+function useOptionalProject(): ProjectContextLike {
+  try {
+    return useProject();
+  } catch {
+    return null;
+  }
+}
+
 export default function Navbar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -20,16 +33,12 @@ export default function Navbar() {
   const params = useParams();
   const pathname = usePathname();
 
-  // Try to access project, but fallback gracefully if outside ProjectLayoutWrapper
-  let project: any = null;
-  try {
-    project = useProject().project;
-  } catch {
-    project = null;
-  }
+  // Always call a hook (no conditional call)
+  const projectCtx = useOptionalProject();
+  const project = projectCtx?.project ?? null;
 
   const projectId = params?.id as string | undefined;
-  const projectName = project?.name || "";
+  const projectName = project?.name ?? "";
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -134,7 +143,7 @@ function SidebarLink({
   onClick?: () => void;
 }) {
   const pathname = usePathname();
-  const isActive = pathname.startsWith(href);
+  const isActive = (pathname ?? "").startsWith(href);
 
   return (
     <Link

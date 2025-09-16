@@ -36,7 +36,7 @@ export default function InspectionsPage() {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/project/${project.projectId}/inspections`,
+        `http://localhost:5000/api/projects/${project.projectId}/inspections`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -67,7 +67,7 @@ export default function InspectionsPage() {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/project/${project.projectId}/inspections`,
+        `http://localhost:5000/api/projects/${project.projectId}/inspections`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },

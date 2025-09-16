@@ -97,12 +97,15 @@ interface Project {
   }[];
 
   // File system
-  directory: FolderItem; // ✅ unified with FilesPage
+  directory: FolderItem;
 }
 
 interface ProjectContextType {
+  // We only render the Provider after project is loaded,
+  // so consumers will always see a non-null Project here.
   project: Project;
-  setProject: React.Dispatch<React.SetStateAction<Project>>;
+  // But the underlying state can be null, so the setter must allow null.
+  setProject: React.Dispatch<React.SetStateAction<Project | null>>;
 }
 
 const ProjectContext = createContext<ProjectContextType | null>(null);
@@ -124,14 +127,13 @@ export default function ProjectLayoutWrapper({
 
   useEffect(() => {
     async function fetchProject() {
-      const res = await fetch(`http://localhost:5000/api/project/${projectId}`, {
+      const res = await fetch(`http://localhost:5000/api/projects/${projectId}`, {
         credentials: "include",
       });
 
       if (res.ok) {
         const data = await res.json();
         if (!data.directory) {
-          // ✅ initialize a default directory if backend doesn't provide one
           data.directory = {
             name: "root",
             createdAt: new Date().toISOString(),
